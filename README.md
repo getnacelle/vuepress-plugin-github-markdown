@@ -32,10 +32,13 @@
         files: [
           {
             path: '/nuxt/changelog.html',
-            title: '@nacelle/nacelle-nuxt-starter',
             owner: 'getnacelle',
             repo: 'nacelle-nuxt-starter',
-            githubFilePath: 'CHANGELOG.md'
+            githubFilePath: 'CHANGELOG.md',
+            modifyContent(content) {
+              // Append title to markdown
+              return '# @nacelle/nacelle-nuxt-starter' + '\n' + content
+            }
           }
         ]
       }
@@ -56,10 +59,10 @@
 | Name | Param[Type] | Describe |
 | ---- | --------- | -------- |
 | path | String | url path where the page will live in docs |
-| title | String | (optional) will be appended at the top of the page |
 | owner | String | github owner/organization |
 | repo | String | github repo name |
 | githubFilePath | String | the url to the raw markdown file |
+| modifyContent | (String): String | (optional) A function that can modify imported content if needed |
 
 
 ## Link to Markdown File in Sidebar

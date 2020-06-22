@@ -1,28 +1,29 @@
 import Github from "./Github";
 
 module.exports = (options) => {
-  console.log('start')
+  const module = {}
 
-  const githubClient = new Github({
-    appID: options.appID,
-    privateKey: options.privateKey,
-    installationId: options.installationId
-  });
+  try {
+    const githubClient = new Github({
+      appID: options.appID,
+      privateKey: options.privateKey,
+      installationId: options.installationId
+    })
 
-  return {
-    async additionalPages () {
+    module['additionalPages'] = async () => {
       const pagePromises = options.files.map(async ({
-        title,
+        modifyContent,
         path,
         owner,
         repo,
         githubFilePath
-      }: PageInput): Promise<Page> => {
+      }: PageInput): Promise<Page | void> => {
         let content = await githubClient
           .getFile(owner, repo, githubFilePath);
 
-        if (title) {
-          content = `# ${title} \n` + content
+        // Allow content modifier
+        if (modifyContent) {
+          content = modifyContent(content)
         }
 
         return {
@@ -30,23 +31,25 @@ module.exports = (options) => {
           content
         }
       })
-
-      const pages = await Promise.all<Page>(
+      
+      return await Promise.all<Page>(
         pagePromises
       )
-
-      return pages
     }
+  } catch (err) {
+    console.error('Error initializing Github Client', err)
   }
+
+  return module
 }
 
 interface Page {
   path: string;
-  content: string;
+  content: string | void;
 }
 
 interface PageInput {
-  title: string;
+  modifyContent(content: string | void): string;
   path: string;
   owner: string;
   repo: string;
