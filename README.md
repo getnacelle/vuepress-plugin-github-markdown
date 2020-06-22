@@ -4,22 +4,25 @@
 
 ## Setup
 
-### Create Github App for Organization
+### Create Github App for Organization:
 
 1. [Register new Github App](https://github.com/organizations/H2Know/settings/apps/new)
   - Please follow [guide](https://developer.github.com/apps/building-github-apps/creating-a-github-app/) if you have questions.
   - Make sure to save the **Private Key** that is generated to your .env file `GITHUB_PRIVATE_KEY`.
+      - May need to format the Private Key properly on single line for env file (The OSX script will format & save to clipboard for easy pasting):
+
+        `awk -v ORS='\\n' '1' github-app-name.2020-06-21.private-key.pem | pbcopy`
   - Also save the **App ID** to your .env file `GITHUB_APP_ID`.
 
 2. Install Github App
   - Please follow [guide](https://developer.github.com/apps/installing-github-apps/) for installation.
   - On the installation page of the app, make note of the **Installation ID**** at the end of the url. (ie. `https://github.com/organizations/getnacelle/settings/installations/**9762656**`). Save to your .env file `GITHUB_INSTALLATION_ID`
 
-### Installation
+### Installation:
 
 `npm install -D vuepress-plugin-github-markdown`
 
-### Add to `.vuepress/config`
+### Add to `.vuepress/config`:
 
 ```
   plugins: [
@@ -46,7 +49,7 @@
   ]
 ```
 
-#### Plugin Options
+#### Plugin Options:
 
 | Name | Param[Type] | Describe |
 | ---- | --------- | -------- |
@@ -55,7 +58,7 @@
 | installationId | String | ID of Github App installation |
 | files | File[] | Array of file options for markdown files to import |
 
-#### File Options
+#### File Options:
 
 | Name | Param[Type] | Describe |
 | ---- | --------- | -------- |
@@ -66,7 +69,7 @@
 | modifyContent | (String): String | (optional) A function that can modify imported content if needed |
 
 
-## Link to Markdown File in Sidebar
+## Link to Markdown File in Sidebar:
 
 We can link to the markdown file by using a standard sidebar group in the `config.js`:
 
