@@ -5,7 +5,7 @@ module.exports = (options) => {
 
   try {
     const githubClient = new Github({
-      appID: options.appID,
+      appId: options.appId,
       privateKey: options.privateKey,
       installationId: options.installationId
     })

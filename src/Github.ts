@@ -11,7 +11,7 @@ export default class Github {
   };
   installationId: string;
 
-  constructor({ appID: id, privateKey, installationId }: GithubParams) {
+  constructor({ appId: id, privateKey, installationId }: GithubParams) {
     // Handle missing params
     if (!id || !privateKey || !installationId) {
       const missingParams: string[] = []
@@ -52,7 +52,7 @@ export default class Github {
 }
 
 interface GithubParams {
-  appID: string,
+  appId: string,
   privateKey: string,
   installationId: string
 }

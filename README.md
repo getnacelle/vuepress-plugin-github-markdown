@@ -1,6 +1,6 @@
 # vuepress-plugin-github-markdown
 
-> VuePress plugin for importing markdown from github
+> VuePress plugin for importing markdown from Github
 
 ## Setup
 
@@ -13,7 +13,7 @@
 
 2. Install Github App
   - Please follow [guide](https://developer.github.com/apps/installing-github-apps/) for installation.
-  - On the installation page of the app, make note of the **Installation ID**** in the url. (ie. `https://github.com/organizations/getnacelle/settings/installations/9762656`). Save to your .env file `GITHUB_INSTALLATION_ID`
+  - On the installation page of the app, make note of the **Installation ID**** at the end of the url. (ie. `https://github.com/organizations/getnacelle/settings/installations/**9762656**`). Save to your .env file `GITHUB_INSTALLATION_ID`
 
 ### Installation
 
@@ -26,7 +26,7 @@
     [
       'vuepress-plugin-github-markdown',
       {
-        appID: process.env.GITHUB_APP_ID,
+        appId: process.env.GITHUB_APP_ID,
         privateKey: process.env.GITHUB_PRIVATE_KEY,
         installationId: process.env.GITHUB_INSTALLATION_ID,
         files: [
@@ -45,11 +45,12 @@
     ]
   ]
 ```
+
 #### Plugin Options
 
 | Name | Param[Type] | Describe |
 | ---- | --------- | -------- |
-| appID | String | App ID for Github App |
+| appId | String | App ID for Github App |
 | privateKey | String | Private Key of Github App |
 | installationId | String | ID of Github App installation |
 | files | File[] | Array of file options for markdown files to import |
