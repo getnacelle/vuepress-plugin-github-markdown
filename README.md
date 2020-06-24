@@ -12,6 +12,7 @@
       - May need to format the Private Key properly on single line for env file (The OSX script will format & save to clipboard for easy pasting):
 
         `awk -v ORS='\\n' '1' github-app-name.2020-06-21.private-key.pem | pbcopy`
+      - Some deployment services (ie. Netlify) won't be able to parse the line breaks properly. When calling the env variable replace the line breaks like this: `process.env.GITHUB_PRIVATE_KEY.replace(/\\n/gm, '\n')`.
   - Also save the **App ID** to your .env file `GITHUB_APP_ID`.
 
 2. Install Github App
@@ -30,7 +31,7 @@
       'vuepress-plugin-github-markdown',
       {
         appId: process.env.GITHUB_APP_ID,
-        privateKey: process.env.GITHUB_PRIVATE_KEY,
+        privateKey: process.env.GITHUB_PRIVATE_KEY.replace(/\\n/gm, '\n'),
         installationId: process.env.GITHUB_INSTALLATION_ID,
         files: [
           {
