@@ -31,3 +31,4 @@ build/Release
 
 # Output directory
 dist
+coverage
