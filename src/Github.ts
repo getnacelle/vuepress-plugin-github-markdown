@@ -1,26 +1,29 @@
-const { Octokit } = require('@octokit/rest')
-const { createAppAuth } = require('@octokit/auth-app')
+/* eslint prefer-rest-params: 0 */
+import { Octokit } from '@octokit/rest'
+import { createAppAuth } from '@octokit/auth-app'
 
 export default class Github {
-  app: typeof createAppAuth;
+  app: Octokit
   appAuthentication: {
-    type: string;
-    token: string;
-    appId: string;
-    expiresAt: string;
-  };
-  installationId: string;
+    type: string
+    token: string
+    appId: string
+    expiresAt: string
+  }
+  installationId: string
 
   constructor({ appId: id, privateKey, installationId }: GithubParams) {
     // Handle missing params
     if (!id || !privateKey || !installationId) {
       const missingParams: string[] = []
       for (const key in arguments[0]) {
-        if(!arguments[0][key]) {
+        if (!arguments[0][key]) {
           missingParams.push(key)
         }
       }
-      throw new Error(`Missing parameter(s): ${missingParams}. Cannot import markdown files from Github.`)
+      throw new Error(
+        `Missing parameter(s): ${missingParams}. Cannot import markdown files from Github.`
+      )
     }
 
     // Initialize Github client
@@ -34,25 +37,30 @@ export default class Github {
     })
   }
 
-  getFile = async (owner: string, repo: string, path: string): Promise<string | void> => {
+  getFile = async (
+    owner: string,
+    repo: string,
+    path: string
+  ): Promise<string | void> => {
     try {
       const fileData = await this.app.repos.getContent({
         owner,
         repo,
         path
       })
-      
-      return Buffer
-        .from(fileData.data.content, 'base64')
-        .toString()
+
+      return Buffer.from(fileData.data.content, 'base64').toString()
     } catch (err) {
-      console.error(`Error Fetching Markdown File: ${owner}/${repo}/${path}`, err)
+      console.error(
+        `Error Fetching Markdown File: ${owner}/${repo}/${path}`,
+        err
+      )
     }
   }
 }
 
 interface GithubParams {
-  appId: string,
-  privateKey: string,
+  appId: string
+  privateKey: string
   installationId: string
 }
